@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // Set authentication state
           setIsAuthenticated(true);
           // @ts-ignore: Suppress navigation type error for Dashboard route
-          navigation.navigate("Patients");
+          navigation.navigate("Dashboard");
           return;
         }
 

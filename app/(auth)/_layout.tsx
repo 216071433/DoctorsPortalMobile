@@ -5,6 +5,8 @@ const AuthLayout = () => {
   return (
     <Stack initialRouteName="Login" screenOptions={{headerShown: false}}>
         <Stack.Screen name='SignInModal'/>
+        <Stack.Screen name='AuthContext'/>
+
        
     </Stack>
   )
