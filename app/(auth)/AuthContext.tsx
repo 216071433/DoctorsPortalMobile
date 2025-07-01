@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // Set authentication state
           setIsAuthenticated(true);
           // @ts-ignore: Suppress navigation type error for Dashboard route
-          navigation.navigate("Dashboard");
+          navigation.navigate("Patients");
           return;
         }
 
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await AsyncStorage.multiRemove(['token', 'doctor_id']);
     setIsAuthenticated(false);
     // @ts-ignore: Suppress navigation type error for Home route
-    navigation.navigate("Home");
+    navigation.navigate("index");
   };
 
   return (

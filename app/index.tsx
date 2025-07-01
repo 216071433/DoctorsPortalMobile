@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "./(auth)/AuthContext";
 import SignInModal from "./(auth)/SignInModal";
-import Footer from "./(layout)/Footer";
+import Footer from "./(pages)/Footer";
 
 const Landing = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
