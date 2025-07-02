@@ -1,26 +1,26 @@
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { Home, LogOut, Users } from 'lucide-react-native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from "../(auth)/AuthContext";
 
 const Sidebar = () => {
-  const navigation = useNavigation();
+  const router = useRouter();
   const { logout } = useAuth();
 
-  const navItems = [
-    { icon: Home, label: "Dashboard", screen: "Dashboard" },
-    { icon: Users, label: "Patients", screen: "Patients" },
+  const navItems: { icon: any; label: string; path: '/Dashboard' | '/Patients' }[] = [
+    { icon: Home, label: "Dashboard", path: "/Dashboard" },
+    { icon: Users, label: "Patients", path: "/Patients" },
   ];
 
-  // Get current route name (similar to useLocation in react-router)
-  const currentRoute = navigation.getState()?.routes[navigation.getState()?.index ?? 0]?.name;
+  // Get current route path (optional, for highlighting active item)
+  // You can use usePathname from expo-router if you want to highlight the active item
 
   return (
     <View style={styles.sidebar}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>Your Appointments</Text>
+        <Text style={styles.headerText}>Welcome to your Portal</Text>
       </View>
 
       {/* Navigation Items */}
@@ -28,15 +28,14 @@ const Sidebar = () => {
         <View style={styles.navList}>
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentRoute === item.screen;
             return (
               <TouchableOpacity
-                key={item.screen}
-                onPress={() => navigation.navigate(item.screen as never)}
-                style={[styles.navItem, isActive ? styles.navItemActive : styles.navItemInactive]}
+                key={item.path}
+                onPress={() => router.push(item.path)}
+                style={[styles.navItem]}
               >
-                <Icon size={20} color={isActive ? '#111827' : '#4B5563'} />
-                <Text style={[styles.navItemText, isActive ? styles.navItemTextActive : styles.navItemTextInactive]}>
+                <Icon size={20} color={'#4B5563'} />
+                <Text style={[styles.navItemText, styles.navItemTextInactive]}>
                   {item.label}
                 </Text>
               </TouchableOpacity>
@@ -93,19 +92,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 4,
   },
-  navItemActive: {
-    backgroundColor: '#f3f4f6', // Tailwind bg-gray-100
-  },
-  navItemInactive: {
-    backgroundColor: 'transparent',
-  },
   navItemText: {
     fontSize: 16,
     marginLeft: 8,
-  },
-  navItemTextActive: {
-    color: '#111827',
-    fontWeight: '500',
   },
   navItemTextInactive: {
     color: '#4B5563',

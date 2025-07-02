@@ -179,7 +179,7 @@ const Patients = () => {
         <View className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
           <View className="bg-blue-600 p-4">
             <View className="flex-row items-center space-x-2">
-              <Users className="text-white" size={20} />
+             
               <Text className="text-white font-bold">Patient Treatment Records</Text>
             </View>
           </View>

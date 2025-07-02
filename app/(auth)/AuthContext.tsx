@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { useRouter } from 'expo-router';
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface AuthContextType {
@@ -15,7 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const login = async (email: string, password: string) => {
     try {
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           // Set authentication state
           setIsAuthenticated(true);
           // @ts-ignore: Suppress navigation type error for Dashboard route
-          navigation.navigate("Dashboard");
+          router.push("/(pages)/Dashboard");
           return;
         }
 

@@ -13,7 +13,7 @@ const Landing = () => {
   // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
     // @ts-ignore: Suppress navigation type error for Home route
-    navigation.navigate("Home");
+    navigation.navigate("Dashboard");
     return null;
   }
 
