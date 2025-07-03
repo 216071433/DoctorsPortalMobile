@@ -8,8 +8,8 @@ const Sidebar = () => {
   const router = useRouter();
   const { logout } = useAuth();
 
-  const navItems: { icon: any; label: string; path: '/Dashboard' | '/Patients' }[] = [
-    { icon: Home, label: "Dashboard", path: "/Dashboard" },
+  const navItems: { icon: any; label: string; path:  '/Patients' }[] = [
+    // { icon: Home, label: "Dashboard", path: "/Dashboard" },
     { icon: Users, label: "Patients", path: "/Patients" },
   ];
 

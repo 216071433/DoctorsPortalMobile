@@ -1,19 +1,20 @@
-import { useNavigation } from "@react-navigation/native";
+
 import React, { useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "./(auth)/AuthContext";
 import SignInModal from "./(auth)/SignInModal";
 import Footer from "./(pages)/Footer";
+import { useRouter } from "expo-router";
 
 const Landing = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const { isAuthenticated } = useAuth();
-  const navigation = useNavigation();
-
+  const router = useRouter();
+  console.log(isAuthenticated);
   // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
     // @ts-ignore: Suppress navigation type error for Home route
-    navigation.navigate("Dashboard");
+    router.push("Dashboard");
     return null;
   }
 
@@ -33,11 +34,28 @@ const Landing = () => {
             <Text className="text-lg md:text-xl text-white mb-8">
               A powerful, modern and intuitive Doctor&apos;s dashboard for your business
             </Text>
-            <TouchableOpacity 
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#9b87f5',
+                paddingHorizontal: 20,
+                paddingVertical: 20,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              activeOpacity={0.8}
               onPress={() => setIsSignInModalOpen(true)}
-              className="bg-[#9b87f5] hover:bg-[#8b77e5] text-white px-8 py-6 text-lg rounded-lg"
             >
-              <Text className="text-white text-lg font-semibold">Sign In</Text>
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 18,
+                  fontWeight: '600',
+                  textAlign: 'center',
+                }}
+              >
+                Sign In
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

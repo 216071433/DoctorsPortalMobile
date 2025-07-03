@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { ArrowLeft, Clock, Users, XCircle } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Patient {
   appointment_id: string;
@@ -81,10 +81,26 @@ const Patients = () => {
 
   const getStatusStyle = (status: string) => {
     switch (status) {
-      case 'approved': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'pending': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'cancelled': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'approved':
+        return {
+          backgroundColor: '#dbeafe', // bg-blue-100
+          borderColor: '#bfdbfe',     // border-blue-200
+        };
+      case 'pending':
+        return {
+          backgroundColor: '#fef9c3', // bg-yellow-100
+          borderColor: '#fef08a',     // border-yellow-200
+        };
+      case 'cancelled':
+        return {
+          backgroundColor: '#fee2e2', // bg-red-100
+          borderColor: '#fecaca',     // border-red-200
+        };
+      default:
+        return {
+          backgroundColor: '#f3f4f6', // bg-gray-100
+          borderColor: '#e5e7eb',     // border-gray-200
+        };
     }
   };
 
@@ -176,63 +192,68 @@ const Patients = () => {
         </View>
 
         {/* Patients Table */}
-        <View className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
-          <View className="bg-blue-600 p-4">
-            <View className="flex-row items-center space-x-2">
-             
-              <Text className="text-white font-bold">Patient Treatment Records</Text>
+        <View style={styles.tableCard}>
+          <View style={styles.tableHeaderBg}>
+            <View style={styles.tableHeaderRow}>
+              <Text style={styles.tableHeaderTitle}>Patient Treatment Records</Text>
             </View>
           </View>
-
-          <View className="p-4">
-            {/* Table Header */}
-            <View className="flex-row pb-3 mb-2 border-b border-gray-200">
-              <View className="w-1/4">
-                <Text className="font-semibold">Patient</Text>
+          <ScrollView horizontal>
+            <View style={styles.tableContent}>
+              {/* Table Header */}
+              <View style={styles.tableRowHeader}>
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Patient</Text></View>
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Analysis</Text></View>
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Symptoms</Text></View>
+                 <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Condition</Text></View>
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Status</Text></View>
+               
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>Date of Appointment</Text></View>
+                <View style={styles.tableCol}><Text style={styles.tableHeaderText}>TimeSlot of Appointment</Text></View>
               </View>
-              <View className="w-1/4">
-                <Text className="font-semibold">Analysis</Text>
-              </View>
-              <View className="w-1/4">
-                <Text className="font-semibold">Symptoms</Text>
-              </View>
-              <View className="w-1/4">
-                <Text className="font-semibold">Status</Text>
-              </View>
-            </View>
-
-            {/* Table Rows */}
-            {appointments.map((appt) => (
-              <View key={appt.appointment_id} className="flex-row py-3 border-b border-gray-100">
-                <View className="w-1/4">
-                  <Text className="font-medium">
-                    {appt.user.first_name} {appt.user.last_name}
-                  </Text>
-                </View>
-                <View className="w-1/4">
-                  <Text className="text-blue-600 font-medium">{appt.analysis}</Text>
-                </View>
-                <View className="w-1/4">
-                  <Text className="text-sm">{formatSymptoms(appt.symptoms)}</Text>
-                </View>
-                <View className="w-1/4">
-                  <TouchableOpacity
-                    onPress={() => {
-                      setSelectedAppointment(appt);
-                      setStatusModalVisible(true);
-                    }}
-                    className={`px-3 py-1 rounded-full border ${getStatusStyle(appt.status)}`}
-                  >
-                    <Text className="capitalize">
-                      {appt.status === 'approved' ? 'approved' : 
-                       appt.status === 'pending' ? 'pending' : 
-                       appt.status === 'cancelled' ? 'cancelled' : appt.status}
+              {/* Table Rows */}
+              {appointments.map((appt) => (
+                <View key={appt.appointment_id} style={styles.tableRow}>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCellText}>
+                      {appt.user.first_name} {appt.user.last_name}
                     </Text>
-                  </TouchableOpacity>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={[styles.tableCellText, { color: '#2563eb', fontWeight: '500' }]}>{appt.analysis}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCellText}>{formatSymptoms(appt.symptoms)}</Text>
+                  </View>
+                   <View style={styles.tableCol}>
+                    <Text style={styles.tableCellText}>{formatSymptoms(appt.condition)}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedAppointment(appt);
+                        setStatusModalVisible(true);
+                      }}
+                      style={[styles.statusButton, getStatusStyle(appt.status)]}
+                    >
+                      <Text style={styles.tableCellText}>
+                        {appt.status === 'approved' ? 'approved' : 
+                          appt.status === 'pending' ? 'pending' : 
+                          appt.status === 'cancelled' ? 'cancelled' : appt.status}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCellText}>{appt.appointment_date}</Text>
+                  </View>
+                  <View style={styles.tableCol}>
+                    <Text style={styles.tableCellText}>{appt.appointment_time}</Text>
+                  </View>
                 </View>
-              </View>
-            ))}
-          </View>
+              ))}
+            </View>
+          </ScrollView>
         </View>
       </ScrollView>
 
@@ -243,29 +264,29 @@ const Patients = () => {
         animationType="slide"
         onRequestClose={() => setStatusModalVisible(false)}
       >
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white rounded-lg p-6 w-80">
-            <Text className="text-lg font-bold mb-4">Change Status</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ backgroundColor: '#fff', borderRadius: 12, padding: 24, width: 320 }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 16 }}>Change Status</Text>
             {selectedAppointment && (
               <>
-                <Text className="mb-4">
-                  {selectedAppointment.user.first_name}'s Appointment
+                <Text style={{ marginBottom: 16 }}>
+                  {selectedAppointment.user.first_name}&apos;s Appointment
                 </Text>
-                <View className="space-y-2">
+                <View style={{ gap: 8 }}>
                   <TouchableOpacity
-                    className="p-3 bg-blue-50 rounded-lg"
+                    style={{ padding: 12, backgroundColor: '#dbeafe', borderRadius: 8, marginBottom: 8 }}
                     onPress={() => handleStatusChange('approved')}
                   >
                     <Text>Approved</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    className="p-3 bg-yellow-50 rounded-lg"
+                    style={{ padding: 12, backgroundColor: '#fef9c3', borderRadius: 8, marginBottom: 8 }}
                     onPress={() => handleStatusChange('pending')}
                   >
                     <Text>Pending</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    className="p-3 bg-red-50 rounded-lg"
+                    style={{ padding: 12, backgroundColor: '#fee2e2', borderRadius: 8, marginBottom: 8 }}
                     onPress={() => handleStatusChange('cancelled')}
                   >
                     <Text>Cancelled</Text>
@@ -274,10 +295,10 @@ const Patients = () => {
               </>
             )}
             <TouchableOpacity
-              className="mt-4 p-3 bg-gray-100 rounded-lg"
+              style={{ marginTop: 16, padding: 12, backgroundColor: '#f3f4f6', borderRadius: 8 }}
               onPress={() => setStatusModalVisible(false)}
             >
-              <Text className="text-center">Cancel</Text>
+              <Text style={{ textAlign: 'center' }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -285,5 +306,66 @@ const Patients = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  tableCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+    marginBottom: 24,
+    overflow: 'hidden',
+  },
+  tableHeaderBg: {
+    backgroundColor: '#2563eb',
+    padding: 16,
+  },
+  tableHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tableHeaderTitle: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  tableContent: {
+    padding: 16,
+    minWidth: 900, // Ensures horizontal scroll if content is wide
+  },
+  tableRowHeader: {
+    flexDirection: 'row',
+    paddingBottom: 12,
+    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f4f6',
+  },
+  tableCol: {
+    width: 150,
+    justifyContent: 'center',
+  },
+  tableHeaderText: {
+    fontWeight: '600',
+    fontSize: 15,
+  },
+  tableCellText: {
+    fontSize: 14,
+  },
+  statusButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 16,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+});
 
 export default Patients;

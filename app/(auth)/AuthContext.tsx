@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from "@react-navigation/native";
+
 import axios from "axios";
 import { useRouter } from 'expo-router';
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await AsyncStorage.multiRemove(['token', 'doctor_id']);
     setIsAuthenticated(false);
     // @ts-ignore: Suppress navigation type error for Home route
-    navigation.navigate("index");
+    router.push("/");
   };
 
   return (
