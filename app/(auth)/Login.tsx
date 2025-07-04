@@ -53,9 +53,16 @@ const Login = () => {
             </View>
 
             <View>
-              <Text className="text-sm font-medium text-gray-700 mb-1">Password</Text>
+              <Text style={{ fontSize: 14, fontWeight: '500', color: '#374151', marginBottom: 4 }}>Password</Text>
               <TextInput
-                className="border border-gray-300 rounded-md p-3 bg-white"
+                style={{
+                  borderWidth: 1,
+                  borderColor: '#d1d5db',
+                  borderRadius: 8,
+                  padding: 12,
+                  backgroundColor: '#fff',
+                  marginBottom: 16,
+                }}
                 placeholder="Enter your password"
                 value={password}
                 onChangeText={setPassword}
@@ -65,14 +72,21 @@ const Login = () => {
             </View>
 
             <TouchableOpacity
-              className={`bg-blue-600 rounded-md p-4 items-center ${isLoading ? "opacity-70" : ""}`}
+              style={{
+                backgroundColor: '#2563eb',
+                borderRadius: 8,
+                padding: 15,
+                alignItems: 'center',
+                marginTop: 8,
+                opacity: isLoading ? 0.7 : 1,
+              }}
               onPress={handleLogin}
               disabled={isLoading}
             >
               {isLoading ? (
                 <ActivityIndicator color="white" />
               ) : (
-                <Text className="text-white font-medium">Sign In</Text>
+                <Text style={{ color: '#fff', fontWeight: '500' }}>Sign In</Text>
               )}
             </TouchableOpacity>
           </View>
