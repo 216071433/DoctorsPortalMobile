@@ -1,22 +1,29 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "./(auth)/AuthContext";
 import SignInModal from "./(auth)/SignInModal";
 import Footer from "./(pages)/Footer";
-import { useRouter } from "expo-router";
+import { RelativePathString, useRouter } from "expo-router";
 
 const Landing = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   console.log(isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("Dashboard" as RelativePathString);
+    }
+  }, [isAuthenticated, router]);
+
   // Redirect to dashboard if already authenticated
-  if (isAuthenticated) {
-    // @ts-ignore: Suppress navigation type error for Home route
-    router.push("Dashboard");
-    return null;
-  }
+  // if (isAuthenticated) {
+  //   // @ts-ignore: Suppress navigation type error for Home route
+  //   router.push("Dashboard");
+  //   return null;
+  // }
 
   return (
     <View className="flex-1">
