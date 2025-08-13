@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useRouter } from 'expo-router';
 import { createContext, ReactNode, useContext, useState } from "react";
 
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
     } catch (err) {
-      if (axios.isAxiosError(err)) {
+      if (isAxiosError(err)) {
         setError(err.response?.data?.message || 'Login failed. Please try again.');
       } else {
         setError('An unexpected error occurred');

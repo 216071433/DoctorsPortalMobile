@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "doctorsportalmobile",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true
     },
@@ -17,7 +17,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.simelanelucky77gmail.com.DoctorsPortalMobile"
+      "package": "com.simelanelucky77gmail.com.doctorsportalmobile"
     },
     "web": {
       "bundler": "metro",
